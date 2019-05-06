@@ -4,7 +4,7 @@ const DISCOVERY_DOCS = [
     'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
 ];
 const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
-
+const Test = "yyy"
 const authorizeButton = document.getElementById('authorize-button');
 const signoutButton = document.getElementById('signout-button');
 const content = document.getElementById('content');
