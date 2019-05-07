@@ -13,6 +13,9 @@ const videoContainer = document.getElementById('video-container');
 
 const defaultChannel = 'techguyweb';
 
+var currentSubscr = [];
+var flag = true;
+
 // Form submit and change channel
 channelForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -159,8 +162,8 @@ function requestVideoPlaylist(playlistId) {
 function getSubscriptions() {
     var nextpgtoken = "";
 
-    var subscriptions_all = [];
-    var flag = true;
+    currentSubscr = [];
+    flag = true;
     console.log("ya em kal");
     while (flag) {
         if (nextpgtoken === "") {
@@ -172,7 +175,7 @@ function getSubscriptions() {
                 .then(function(response) {
                         // Handle the results here (response.result has the parsed body).
                         console.log(response);
-                        subscriptions_all = subscriptions_all.concat(response.result.items);
+                        currentSubscr = currentSubscr.concat(response.result.items);
                         console.log(response.result.nextPageToken);
                         if(response.result.nextPageToken) {
                             nextpgtoken = response.result.nextPageToken;
@@ -204,7 +207,7 @@ function getSubscriptions() {
                 .then(function(response) {
                         // Handle the results here (response.result has the parsed body).
                         console.log(response);
-                        subscriptions_all = subscriptions_all.concat(response.result.items);
+                        currentSubscr = currentSubscr.concat(response.result.items);
                         console.log(response.result.nextPageToken);
                         if(response.result.nextPageToken) {
                             nextpgtoken = response.result.nextPageToken;
@@ -228,7 +231,7 @@ function getSubscriptions() {
     }
 
 
-    return subscriptions_all;
+    return currentSubscr;
 }
 
 function getLatestVideos() {
