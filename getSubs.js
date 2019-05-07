@@ -83,8 +83,8 @@ function showChannelData(data) {
 function getChannel(channel) {
     gapi.client.youtube.channels
         .list({
-            "part": 'snippet,contentDetails,statistics',
-            "forUsername": channel
+            part: 'snippet,contentDetails,statistics',
+            forUsername: channel
         })
         .then(response => {
             console.log(response);
@@ -166,9 +166,9 @@ function getSubscriptions() {
     while (flag) {
         if (nextpgtoken === "") {
             gapi.client.youtube.subscriptions.list({
-                "part": "snippet,contentDetails",
-                "maxResults": 50,
-                "mine": true
+                part: "snippet,contentDetails",
+                maxResults: 50,
+                mine: true
             })
                 .then(function(response) {
                         // Handle the results here (response.result has the parsed body).
