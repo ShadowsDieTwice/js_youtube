@@ -54,7 +54,7 @@ function updateSigninStatus(isSignedIn) {
         signoutButton.style.display = 'block';
         content.style.display = 'block';
         videoContainer.style.display = 'block';
-        getChannel(defaultChannel);
+        //getChannel(defaultChannel);
     } else {
         authorizeButton.style.display = 'block';
         signoutButton.style.display = 'none';
@@ -163,8 +163,8 @@ function getSubscriptions() {
     var subscriptions_all = [];
 
     while (true) {
-        var subres = gapi.client.youtube.subscriptions().list(part = "snippet,contentDetails",
-            mine = True, maxResults = 50, pageToken = nextpgtoken).execute();
+        var subres = gapi.client.youtube.subscriptions().list({"part" : "snippet,contentDetails",
+            "mine" : true, "maxResults" : 50, "pageToken" : nextpgtoken}).execute();
 
         subscriptions_all += subres.items;
 
