@@ -158,7 +158,7 @@ function requestVideoPlaylist(playlistId) {
 }
 
 function getSubscriptions() {
-    var nextpgtoken = '';
+    var nextpgtoken = false;
 
     var subscriptions_all = [];
     var flag = true;
