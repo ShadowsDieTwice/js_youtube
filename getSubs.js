@@ -230,6 +230,7 @@ function getLatestVideos() {
                 break
 */
             i += 1});
+            break;
         }});
     }
 
