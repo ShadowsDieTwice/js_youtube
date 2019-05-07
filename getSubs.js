@@ -20,7 +20,7 @@ channelForm.addEventListener('submit', e => {
     const channel = channelInput.value;
 
     getChannel(channel);
-    //getLatestVideos();
+    getLatestVideos();
 });
 
 // Load auth2 library
