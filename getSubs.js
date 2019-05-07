@@ -164,8 +164,10 @@ function getSubscriptions() {
 
     currentSubscr = [];
     flag = true;
+    var isFinished = false;
     console.log("ya em kal");
     while (flag) {
+        isFinished = false;
         if (nextpgtoken === "") {
             gapi.client.youtube.subscriptions.list({
                 part: "snippet,contentDetails",
@@ -181,9 +183,11 @@ function getSubscriptions() {
                             nextpgtoken = response.result.nextPageToken;
                             console.log(nextpgtoken);
                         } else flag = false;
-                    },
-                    function(err) { console.error("Execute error", err); });
 
+                        isFinished = true;
+                    },
+                    function(err) { console.error("Execute error", err); isFinished = true; });
+            while (!isFinished) {}
             flag = false;
             /*const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
                 "mine" : true, "maxResults" : 50});
@@ -213,8 +217,10 @@ function getSubscriptions() {
                             nextpgtoken = response.result.nextPageToken;
                             console.log(nextpgtoken);
                         } else flag = false;
+                        isFinished = true;
                     },
-                    function(err) { console.error("Execute error", err); });
+                    function(err) { console.error("Execute error", err); isFinished = true; });
+            while (!isFinished) {}
             /*const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
                 "mine" : true, "maxResults" : 50, "pageToken" : nextpgtoken});
 
