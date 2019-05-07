@@ -3,7 +3,7 @@ const CLIENT_ID = '837120189518-l4bjs53ahgcvp7a8rr8onvmsphmv9j0u.apps.googleuser
 const DISCOVERY_DOCS = [
     'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
 ];
-const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
+const SCOPES = 'https://www.googleapis.com/auth/youtube.force-ssl';
 const Test = "yyy"
 const authorizeButton = document.getElementById('authorize-button');
 const signoutButton = document.getElementById('signout-button');
@@ -20,7 +20,8 @@ channelForm.addEventListener('submit', e => {
 
     const channel = channelInput.value;
 
-    getChannel(channel);
+    //getChannel(channel);
+    getLatestVideos();
 });
 
 // Load auth2 library
@@ -154,4 +155,79 @@ function requestVideoPlaylist(playlistId) {
             videoContainer.innerHTML = 'No Uploaded Videos';
         }
     });
+}
+
+function getSubscriptions() {
+    var nextpgtoken = null;
+
+    var subscriptions_all = [];
+
+    while (true) {
+        var subres = gapi.client.youtube.subscriptions().list(part = "snippet,contentDetails",
+            mine = True, maxResults = 50, pageToken = nextpgtoken).execute();
+
+        subscriptions_all += subres.items;
+
+        try {
+            nextpgtoken = subres.nextPageToken();
+        } catch(err) {
+            break;
+        }
+        if (nextpgtoken === null) break;
+    }
+
+
+    return subscriptions_all;
+}
+
+function getLatestVideos() {
+    var subscriptions = getSubscriptions();
+
+    var date = new Date;
+    date.setDate(date.getDate() - 7)
+
+    var j = 0;
+    for (var channel in subscriptions) {
+        var i = 0;
+        var nextpgtoken = null;
+        var videos_latest = gapi.client.youtube.channels().list({
+            "id": channel.snippet.resourceId.channelId, //['snippet']['resourceId']['channelId'],
+            "part": "contentDetails"
+        }).execute()
+
+
+        while (true) {
+
+            var subres = youtube.playlistItems().list({"playlistId" : videos_latest.items[0].contentDetails.relatedPlaylists.uploads,
+                "part" : 'snippet', "maxResults" : 50,
+                "pageToken" : nextpgtoken}).execute()
+
+            console.log(subres.items[0].snippet.publishedAt);
+            /*if (datetime.strptime(subres['items'][0]['snippet']['publishedAt'][:
+            -5
+        ],
+            '%Y-%m-%dT%H:%M:%S'
+        ) <
+            time
+        ) :
+            break;
+
+            videos_all += subres['items']
+
+            try
+        :
+            nextpgtoken = subres.get('nextPageToken')
+            except :
+                break
+
+            if nextpgtoken is
+            None :
+                break
+*/
+            i += 1
+        }
+    }
+
+
+    return videos_all
 }
