@@ -171,12 +171,13 @@ function getSubscriptions() {
             })
                 .then(function(response) {
                         // Handle the results here (response.result has the parsed body).
-                        console.log("Response", response);
+                        console.log(response);
+                        console.log(response.result.nextPageToken);
                     },
                     function(err) { console.error("Execute error", err); });
 
 
-            const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
+            /*const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
                 "mine" : true, "maxResults" : 50});
 
             subres.execute(response => {
@@ -186,10 +187,10 @@ function getSubscriptions() {
                     nextpgtoken = response.result.nextPageToken;
                     console.log(nextpgtoken);
                 } else flag = false;
-            });
+            });*/
         }
         else {
-            const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
+            /*const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
                 "mine" : true, "maxResults" : 50, "pageToken" : nextpgtoken});
 
             subres.execute(response => {
@@ -199,7 +200,7 @@ function getSubscriptions() {
                     nextpgtoken = response.result.nextPageToken;
                     console.log(nextpgtoken);
                 } else flag = false;
-            });
+            });*/
         }
 
     }
