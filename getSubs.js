@@ -158,13 +158,13 @@ function requestVideoPlaylist(playlistId) {
 }
 
 function getSubscriptions() {
-    var nextpgtoken = null;
+    var nextpgtoken = undefined;
 
     var subscriptions_all = [];
     var flag = true;
     console.log("ya em kal");
     while (true) {
-        var subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
+        const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
             "mine" : true, "maxResults" : 50, "pageToken" : nextpgtoken});
 
         subres.execute(response => {
