@@ -162,12 +162,11 @@ function requestVideoPlaylist(playlistId) {
 }
 
 function getSubscriptions() {
-    var nextpgtoken = "";
+    let nextpgtoken = "";
 
     currentSubscr = [];
     flag = true;
     var isFinished = false;
-    console.log("ya em kal");
     while (flag) {
         isFinished = false;
         if (nextpgtoken === "") {
