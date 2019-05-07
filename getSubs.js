@@ -161,6 +161,7 @@ function getSubscriptions() {
     var nextpgtoken = null;
 
     var subscriptions_all = [];
+    var flag = true;
 
     while (true) {
         var subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
@@ -173,11 +174,11 @@ function getSubscriptions() {
             try {
                 nextpgtoken = response.result.nextPageToken;
             } catch (err) {
-                break;
+                flag = false;
             }
-            if (nextpgtoken === null) break;
+            if (nextpgtoken === null) flag = false;
         });
-
+        if (!flag) break;
     }
 
 
