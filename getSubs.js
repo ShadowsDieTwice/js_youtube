@@ -158,24 +158,39 @@ function requestVideoPlaylist(playlistId) {
 }
 
 function getSubscriptions() {
-    var nextpgtoken = false;
+    var nextpgtoken = "";
 
     var subscriptions_all = [];
     var flag = true;
     console.log("ya em kal");
-    while (true) {
-        const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
-            "mine" : true, "maxResults" : 50, "pageToken" : nextpgtoken});
+    while (flag) {
+        if (nextpgtoken === "") {
+            const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
+                "mine" : true, "maxResults" : 50});
 
-        subres.execute(response => {
-            console.log(response);
-            subscriptions_all += response.result.items;
-            if(response.result.nextPageToken) {
-                nextpgtoken = response.result.nextPageToken;
-                console.log(nextpgtoken);
-            } else flag = false;
-        });
-        if (!flag) break;
+            subres.execute(response => {
+                console.log(response);
+                subscriptions_all += response.result.items;
+                if(response.result.nextPageToken) {
+                    nextpgtoken = response.result.nextPageToken;
+                    console.log(nextpgtoken);
+                } else flag = false;
+            });
+        }
+        else {
+            const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
+                "mine" : true, "maxResults" : 50, "pageToken" : nextpgtoken});
+
+            subres.execute(response => {
+                console.log(response);
+                subscriptions_all += response.result.items;
+                if(response.result.nextPageToken) {
+                    nextpgtoken = response.result.nextPageToken;
+                    console.log(nextpgtoken);
+                } else flag = false;
+            });
+        }
+
     }
 
 
