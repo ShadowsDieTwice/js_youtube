@@ -176,7 +176,7 @@ function getSubscriptions() {
                     },
                     function(err) { console.error("Execute error", err); });
 
-
+            flag = false;
             /*const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
                 "mine" : true, "maxResults" : 50});
 
