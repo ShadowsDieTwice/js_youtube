@@ -158,7 +158,7 @@ function requestVideoPlaylist(playlistId) {
 }
 
 function getSubscriptions() {
-    var nextpgtoken = undefined;
+    var nextpgtoken = '';
 
     var subscriptions_all = [];
     var flag = true;
@@ -170,9 +170,10 @@ function getSubscriptions() {
         subres.execute(response => {
             console.log(response);
             subscriptions_all += response.result.items;
-            nextpgtoken = response.result.nextPageToken;
-            console.log(nextpgtoken);
-            if (nextpgtoken == null) flag = false;
+            if(response.result.nextPageToken) {
+                nextpgtoken = response.result.nextPageToken;
+                console.log(nextpgtoken);
+            } else flag = false;
         });
         if (!flag) break;
     }
