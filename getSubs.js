@@ -20,7 +20,7 @@ channelForm.addEventListener('submit', e => {
 
     const channel = channelInput.value;
 
-    //getChannel(channel);
+    getChannel(channel);
     getLatestVideos();
 });
 
@@ -54,7 +54,7 @@ function updateSigninStatus(isSignedIn) {
         signoutButton.style.display = 'block';
         content.style.display = 'block';
         videoContainer.style.display = 'block';
-        //getChannel(defaultChannel);
+        getChannel(defaultChannel);
     } else {
         authorizeButton.style.display = 'block';
         signoutButton.style.display = 'none';
@@ -83,8 +83,8 @@ function showChannelData(data) {
 function getChannel(channel) {
     gapi.client.youtube.channels
         .list({
-            part: 'snippet,contentDetails,statistics',
-            forUsername: channel
+            "part": 'snippet,contentDetails,statistics',
+            "forUsername": channel
         })
         .then(response => {
             console.log(response);
