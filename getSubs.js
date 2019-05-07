@@ -165,6 +165,18 @@ function getSubscriptions() {
     console.log("ya em kal");
     while (flag) {
         if (nextpgtoken === "") {
+            gapi.client.youtube.subscriptions.list({
+                "part": "snippet,contentDetails",
+                "maxResults": 50,
+                "mine": true
+            })
+                .then(function(response) {
+                        // Handle the results here (response.result has the parsed body).
+                        console.log("Response", response);
+                    },
+                    function(err) { console.error("Execute error", err); });
+
+
             const subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
                 "mine" : true, "maxResults" : 50});
 
