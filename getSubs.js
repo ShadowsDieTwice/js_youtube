@@ -164,16 +164,20 @@ function getSubscriptions() {
 
     while (true) {
         var subres = gapi.client.youtube.subscriptions.list({"part" : "snippet,contentDetails",
-            "mine" : true, "maxResults" : 50, "pageToken" : nextpgtoken}).execute();
+            "mine" : true, "maxResults" : 50, "pageToken" : nextpgtoken});
 
-        subscriptions_all += subres.items;
+        subres.execute(response => {
+            console.log(response);
+            subscriptions_all += response.result.items;
 
-        try {
-            nextpgtoken = subres.nextPageToken();
-        } catch(err) {
-            break;
-        }
-        if (nextpgtoken === null) break;
+            try {
+                nextpgtoken = response.result.nextPageToken;
+            } catch (err) {
+                break;
+            }
+            if (nextpgtoken === null) break;
+        });
+
     }
 
 
@@ -190,19 +194,19 @@ function getLatestVideos() {
     for (var channel in subscriptions) {
         var i = 0;
         var nextpgtoken = null;
-        var videos_latest = gapi.client.youtube.channels().list({
+        var videos_latest = gapi.client.youtube.channels.list({
             "id": channel.snippet.resourceId.channelId, //['snippet']['resourceId']['channelId'],
             "part": "contentDetails"
-        }).execute()
+        });
 
-
+        videos_latest.execute(response => {
         while (true) {
 
-            var subres = youtube.playlistItems().list({"playlistId" : videos_latest.items[0].contentDetails.relatedPlaylists.uploads,
+            var subres = youtube.playlistItems.list({"playlistId" : response.result.items[0].contentDetails.relatedPlaylists.uploads,
                 "part" : 'snippet', "maxResults" : 50,
-                "pageToken" : nextpgtoken}).execute()
-
-            console.log(subres.items[0].snippet.publishedAt);
+                "pageToken" : nextpgtoken});
+            subres.execute(response2 => {
+            console.log(response2.result.items[0].snippet.publishedAt);
             /*if (datetime.strptime(subres['items'][0]['snippet']['publishedAt'][:
             -5
         ],
@@ -224,8 +228,8 @@ function getLatestVideos() {
             None :
                 break
 */
-            i += 1
-        }
+            i += 1});
+        }});
     }
 
 
