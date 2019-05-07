@@ -20,7 +20,7 @@ channelForm.addEventListener('submit', e => {
 
     const channel = channelInput.value;
 
-    //getChannel(channel);
+    getChannel(channel);
     getLatestVideos();
 });
 
@@ -54,7 +54,7 @@ function updateSigninStatus(isSignedIn) {
         signoutButton.style.display = 'block';
         content.style.display = 'block';
         videoContainer.style.display = 'block';
-        //getChannel(defaultChannel);
+        getChannel(defaultChannel);
     } else {
         authorizeButton.style.display = 'block';
         signoutButton.style.display = 'none';
@@ -188,10 +188,13 @@ function getSubscriptions() {
 function getLatestVideos() {
     var subscriptions = getSubscriptions();
 
+    var videos_all = [];
+    console.log(subscriptions.length);
     var date = new Date;
     date.setDate(date.getDate() - 7)
 
     var j = 0;
+    /*
     for (var channel in subscriptions) {
         var i = 0;
         var nextpgtoken = null;
@@ -228,12 +231,12 @@ function getLatestVideos() {
             if nextpgtoken is
             None :
                 break
-*/
+
             i += 1});
             break;
         }});
-    }
+    }*/
 
 
-    return videos_all
+    return videos_all;
 }
