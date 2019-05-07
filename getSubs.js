@@ -170,13 +170,9 @@ function getSubscriptions() {
         subres.execute(response => {
             console.log(response);
             subscriptions_all += response.result.items;
-
-            try {
-                nextpgtoken = response.result.nextPageToken;
-            } catch (err) {
-                flag = false;
-            }
-            if (nextpgtoken === null) flag = false;
+            nextpgtoken = response.result.nextPageToken;
+            console.log(nextpgtoken);
+            if (nextpgtoken == null) flag = false;
         });
         if (!flag) break;
     }
